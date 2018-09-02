@@ -5,7 +5,7 @@ import time
 import datetime
 import robotparser
 from downloader import Downloader
-
+from mongo_cache import MongoCache
 
 def link_crawler(seed_url, link_regex=None, delay=5, max_depth=-1, max_urls=-1, user_agent='wswp', proxies=None,
                  num_retries=1, scrape_callback=None, cache=None):
@@ -86,6 +86,6 @@ def get_links(html):
 
 
 if __name__ == '__main__':
-    # link_crawler('http://example.webscraping.com', '/(index|view)', delay=0, num_retries=1, user_agent='BadCrawler')
-    link_crawler('http://example.webscraping.com', '/places/default/(index|view)', delay=0, num_retries=1, max_depth=1,
-                 user_agent='GoodCrawler')
+    link_crawler('http://example.webscraping.com', '/(index|view)', delay=0, num_retries=1, user_agent='BadCrawler')
+    link_crawler('http://example.webscraping.com', '/places/default/view', delay=0, num_retries=1, max_depth=10,
+                 user_agent='GoodCrawler', cache=MongoCache(expires=datetime.timedelta()))
